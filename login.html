@@ -199,11 +199,52 @@
         }
   </style>
   <script>
-   function toggleMenu() {
-            const menu = document.querySelector('.navbar .menu');
-            menu.classList.toggle('show');
+    function toggleMenu() {
+        const menu = document.querySelector('.navbar .menu');
+        menu.classList.toggle('show');
+    }
+
+    function validateLoginForm(event) {
+        event.preventDefault();  
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+
+        let valid = true;
+
+        emailError.textContent = '';
+        passwordError.textContent = '';
+
+        if (!email || !validateEmail(email)) {
+            emailError.textContent = 'Por favor, ingresa un correo electrónico válido.';
+            valid = false;
         }
-    </script>
+
+      
+        if (!password) {
+            passwordError.textContent = 'La contraseña es obligatoria.';
+            valid = false;
+        }
+
+        if (valid) {
+            window.location.href = 'foro.html';  
+        }
+    }
+
+    function validateEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', validateLoginForm);
+        }
+    });
+</script>
  </head>
  <body>
     <div class="navbar">
